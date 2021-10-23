@@ -1,3 +1,4 @@
+// 送信完了画面（アニメーションのところ）
 import 'package:flutter/material.dart';
 import 'package:spajam2021_souseki/api/api_client.dart';
 import 'package:spajam2021_souseki/response/send_message_response.dart';
@@ -17,12 +18,13 @@ class _SendScreenState extends State<SendScreen> {
   void initState() {
     super.initState();
 
-    // Future(() async {
-    //   final SendMessageResponse? response = await ApiClient().sendMessage();
-    //   setState(() {
-    //     _waitingPeriod = response!.waitingPeriod;
-    //   });
-    // });
+    Future(() async {
+      // TODO: テキストと送信者idいれる
+      final SendMessageResponse? response = await ApiClient().sendMessage("", 1);
+      setState(() {
+        _waitingPeriod = response!.waitingPeriod;
+      });
+    });
   }
 
   @override

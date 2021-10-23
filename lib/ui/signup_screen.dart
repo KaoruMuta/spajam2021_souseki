@@ -1,3 +1,4 @@
+// 登録画面
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spajam2021_souseki/api/api_client.dart';
