@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spajam2021_souseki/entity/message.dart';
 import 'package:spajam2021_souseki/entity/region.dart';
 import 'package:spajam2021_souseki/entity/token.dart';
@@ -70,11 +71,13 @@ class ApiClient {
 
   // TODO: GET /messages/receive
   Future<List<Message>?> loadReceivedMessage() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final String token = pref.get("token") as String;
     final response = await http.post(
       Uri.parse(_baseUrl + "messages/received"),
         headers: {
         // TODO: insert token
-          HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+          HttpHeaders.authorizationHeader: token,
         },
     );
     if (response.statusCode == 200) {
@@ -96,12 +99,14 @@ class ApiClient {
 
   // // TODO: PUT /users/is_publishing
   Future<Map<String, bool>?> changePublishingStatus(bool isPublishing) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final String token = pref.get("token") as String;
     final response = await http.put(
       Uri.parse(_baseUrl + "users/is_publishing"),
       body: jsonEncode({"is_publishing": isPublishing}),
       headers: {
         // TODO: insert token
-        HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+        HttpHeaders.authorizationHeader: token,
       },
     );
     if (response.statusCode == 200) {
