@@ -1,7 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:spajam2021_souseki/api/api_client.dart';
+import 'package:spajam2021_souseki/response/send_message_response.dart';
 
-class SendScreen extends StatelessWidget {
+class SendScreen extends StatefulWidget {
   const SendScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SendScreen> createState() => _SendScreenState();
+}
+
+class _SendScreenState extends State<SendScreen> {
+
+  int _waitingPeriod = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Future(() async {
+    //   final SendMessageResponse? response = await ApiClient().sendMessage();
+    //   setState(() {
+    //     _waitingPeriod = response!.waitingPeriod;
+    //   });
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,6 +32,7 @@ class SendScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text("$_waitingPeriod日かかるでしょう"),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/');
@@ -24,4 +47,3 @@ class SendScreen extends StatelessWidget {
     );
   }
 }
-

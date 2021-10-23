@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spajam2021_souseki/api/api_client.dart';
 
 class CreateScreen extends StatelessWidget {
   const CreateScreen({Key? key}) : super(key: key);
@@ -10,6 +11,10 @@ class CreateScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const TextField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/send');

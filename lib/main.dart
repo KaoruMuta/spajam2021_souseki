@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // TODO: ログインステータスに対してinitial Routeを変える
+      // TODO: ログインステータス(tokenの有無)に対してinitial Routeを変える
       initialRoute: '/signup',
       title: 'Flutter Demo',
       routes: <String, WidgetBuilder>{
