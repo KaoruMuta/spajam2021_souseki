@@ -41,6 +41,7 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
                 "内容を見る",
               ),
             ),
+            Image.asset('images/Spajam'),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);

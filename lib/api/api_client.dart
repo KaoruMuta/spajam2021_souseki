@@ -25,6 +25,7 @@ class ApiClient {
   Future<List<Region>> loadRegions() async {
     final response = await http.get(Uri.parse(_baseUrl + "regions"));
     if (response.statusCode == 200) {
+      print(response.body);
       final parsedData = jsonDecode(response.body).cast<Map<String, dynamic>>();
       return parsedData.map<Region>((json) => Region.fromJson(json)).toList();
     } else {
@@ -35,12 +36,11 @@ class ApiClient {
 
   // TODO: POST /users
   Future<Token?> register(String name, int regionId) async {
-    final response = await http.post(
-      Uri.parse(_baseUrl + "users"),
-      body: jsonEncode({"name": name, "region_id": regionId})
-    );
+    final response = await http.post(Uri.parse(_baseUrl + "users"),
+        body: jsonEncode({"name": name, "region_id": regionId}));
     if (response.statusCode == 200) {
-      final token = jsonDecode(response.body);
+      final parsedData = jsonDecode(response.body);
+      final token = Token.fromJson(parsedData);
       return token;
     }
   }
@@ -75,10 +75,10 @@ class ApiClient {
     final String token = pref.get("token") as String;
     final response = await http.post(
       Uri.parse(_baseUrl + "messages/received"),
-        headers: {
+      headers: {
         // TODO: insert token
-          HttpHeaders.authorizationHeader: token,
-        },
+        HttpHeaders.authorizationHeader: token,
+      },
     );
     if (response.statusCode == 200) {
       final sendMessageResponse = jsonDecode(response.body);

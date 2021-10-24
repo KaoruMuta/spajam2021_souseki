@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "spajam2021_souseki",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "spajam2021_souseki (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "oem (debug mode)",
+            "request": "launch",
+            "type": "dart",
+            "cwd": "packages/oem",
+            "program": "lib/main_development.dart",
+            "args": [
+                "--debug",
+                "--flavor",
+                "development",
+            ]
+        }
+    ]
+}

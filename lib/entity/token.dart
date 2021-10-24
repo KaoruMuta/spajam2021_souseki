@@ -3,9 +3,7 @@ class Token {
 
   Token({required this.token});
 
-  factory Token.fromJson(Map<String, String> json) {
-    return Token(
-      token: json["token"]
-    );
+  factory Token.fromJson(Map<String, dynamic> json) {
+    return Token(token: json["token"]);
   }
 }

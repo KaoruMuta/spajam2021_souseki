@@ -13,7 +13,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   List<Region> _regions = [];
   String _name = "";
   // Region _region = null;
@@ -22,12 +21,22 @@ class _SignupScreenState extends State<SignupScreen> {
   void initState() {
     super.initState();
 
+    pushHomeIfTokenExists();
+
     Future(() async {
       final List<Region> regions = await ApiClient().loadRegions();
       setState(() {
         _regions = regions;
       });
     });
+  }
+
+  void pushHomeIfTokenExists() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final _token = await pref.getString('token');
+    if (_token != null && _token.isNotEmpty) {
+      Navigator.pushReplacementNamed(context, '/');
+    }
   }
 
   @override
@@ -64,4 +73,3 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-
