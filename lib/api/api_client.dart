@@ -27,8 +27,10 @@ class ApiClient {
     final response = await http.get(Uri.parse(_baseUrl + "regions"));
     if (response.statusCode == 200) {
       print(response.body);
-      final parsedData = jsonDecode(response.body).cast<Map<String, dynamic>>();
-      return parsedData.map<Region>((json) => Region.fromJson(json)).toList();
+      final parsedData = jsonDecode(response.body)['regions'];
+      final res =
+          parsedData.map<Region>((json) => Region.fromJson(json)).toList();
+      return res;
     } else {
       print("Invalid status code: ${response.statusCode}");
       return [];
@@ -103,7 +105,56 @@ class ApiClient {
     } catch (e) {
       print(e);
     }
-    return [];
+    return List.from([
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+      Message(
+        id: "1",
+        text: "テキストです",
+        publicationDate: "1",
+        senderUser: SenderUser(id: "1", name: "name"),
+      ),
+    ]);
   }
 
   // // TODO: PUT /messages/:id/isRead
