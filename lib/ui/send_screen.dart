@@ -45,6 +45,8 @@ class _SendScreenState extends State<SendScreen> {
               children: <Widget>[
                 const SendRed(
                   title: '2日かかります',
+                  //
+                  // title: '$_waitingPeriod日かかります',
                 ),
                 InkWell(
                   child: Image.asset(

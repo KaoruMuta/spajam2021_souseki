@@ -6,8 +6,8 @@ class SendMessageResponse {
 
   factory SendMessageResponse.fromJson(Map<String, dynamic> json) {
     return SendMessageResponse(
-      replyMessageId: json["reply_message_id"],
-      waitingPeriod: json["waiting_period"],
+      replyMessageId: json["reply_message_id"] as int?,
+      waitingPeriod: json["waiting_period"] as int,
     );
   }
 }

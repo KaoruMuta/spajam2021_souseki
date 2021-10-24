@@ -51,7 +51,7 @@ class CreateScreen extends StatelessWidget {
                 Stack(alignment: Alignment.center, children: [
                   Image.asset(
                     'images/letter.png',
-                    width: 320,
+                    width: 280,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),

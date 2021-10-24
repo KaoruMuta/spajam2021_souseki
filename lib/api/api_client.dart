@@ -68,7 +68,8 @@ class ApiClient {
     );
     if (response.statusCode == 200) {
       final sendMessageResponse = jsonDecode(response.body);
-      return sendMessageResponse;
+      print(sendMessageResponse);
+      return SendMessageResponse.fromJson(jsonDecode(response.body));
     }
   }
 
@@ -80,8 +81,8 @@ class ApiClient {
       final response = await http.get(
         Uri.parse(_baseUrl + "messages/received"),
         headers: {
-          // TODO: insert token
-          HttpHeaders.authorizationHeader: token,
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
         },
       );
       print('AAAAAAAAAAA ${response.body}');
@@ -176,8 +177,8 @@ class ApiClient {
       Uri.parse(_baseUrl + "users/is_publishing"),
       body: jsonEncode({"is_publishing": isPublishing}),
       headers: {
-        // TODO: insert token
-        HttpHeaders.authorizationHeader: token,
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       },
     );
     if (response.statusCode == 200) {
