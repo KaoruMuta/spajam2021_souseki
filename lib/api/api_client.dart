@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spajam2021_souseki/entity/message.dart';
 import 'package:spajam2021_souseki/entity/region.dart';
+import 'package:spajam2021_souseki/entity/sender_user.dart';
 import 'package:spajam2021_souseki/entity/token.dart';
 import 'package:spajam2021_souseki/entity/user.dart';
 import 'package:spajam2021_souseki/response/send_message_response.dart';
@@ -70,20 +71,39 @@ class ApiClient {
   }
 
   // TODO: GET /messages/receive
-  Future<List<Message>?> loadReceivedMessage() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    final String token = pref.get("token") as String;
-    final response = await http.post(
-      Uri.parse(_baseUrl + "messages/received"),
-      headers: {
-        // TODO: insert token
-        HttpHeaders.authorizationHeader: token,
-      },
-    );
-    if (response.statusCode == 200) {
-      final sendMessageResponse = jsonDecode(response.body);
-      return sendMessageResponse;
+  Future<List<Message>> loadReceivedMessage() async {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      final String token = pref.get("token") as String;
+      final response = await http.get(
+        Uri.parse(_baseUrl + "messages/received"),
+        headers: {
+          // TODO: insert token
+          HttpHeaders.authorizationHeader: token,
+        },
+      );
+      print('AAAAAAAAAAA ${response.body}');
+
+      if (response.statusCode == 200) {
+        final sendMessageResponse = jsonDecode(response.body);
+        print('AAAAAAAAAAA ${response.body}');
+        final parsedData =
+            jsonDecode(response.body).cast<Map<String, dynamic>>();
+        final res =
+            parsedData.map<Message>((json) => Message.fromJson(json)).toList();
+        print('AAAAAAAAAAA $res');
+        return [
+          Message(
+              id: "1",
+              text: "aaaaaaaa",
+              publicationDate: "1",
+              senderUser: SenderUser(id: "1", name: "name"))
+        ];
+      }
+    } catch (e) {
+      print(e);
     }
+    return [];
   }
 
   // // TODO: PUT /messages/:id/isRead

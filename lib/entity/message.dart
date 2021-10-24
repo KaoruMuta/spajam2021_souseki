@@ -6,5 +6,17 @@ class Message {
   final String publicationDate;
   final SenderUser senderUser;
 
-  Message(this.id, this.text, this.publicationDate, this.senderUser);
+  Message(
+      {required this.id,
+      required this.text,
+      required this.publicationDate,
+      required this.senderUser});
+
+  factory Message.fromJson(Map<String, dynamic> json) {
+    return Message(
+        id: json["id"],
+        text: json["text"],
+        publicationDate: json["publication_date"],
+        senderUser: SenderUser.fromJson(json["send_user"]));
+  }
 }
