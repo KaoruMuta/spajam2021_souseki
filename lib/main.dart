@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
         '/message': (context) => const MessageScreen(),
       },
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xffedce57),
+        primarySwatch: Colors.yellow,
+        fontFamily: '02UtsukushiMincho',
       ),
     );
   }

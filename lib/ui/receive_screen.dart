@@ -23,7 +23,6 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
         _isLoading = true;
       });
       final List<Message> messages = await ApiClient().loadReceivedMessage();
-      print('AAAAAAAA called');
       setState(() {
         _messages = messages;
         _isLoading = false;
@@ -34,38 +33,98 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return MessageItem(message: Message());
-                  }),
-      //     ElevatedButton(
-      //       onPressed: () {
-      //         Navigator.pushNamed(context, '/message');
-      //       },
-      //       child: const Text(
-      //         "内容を見る",
-      //       ),
-      //     ),
-      //     Image.asset('images/mail'),
-      //     ElevatedButton(
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //       child: const Text(
-      //         "ホームへ",
-      //       ),
-      //     ),
-      //   ],
-      // ),
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage('images/background5.png'),
+          fit: BoxFit.cover,
+        )),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(
+                  height: 20,
+                ),
+                const TitleRed(title: '受信箱'),
+                _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Flexible(
+                        child: GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent: 200,
+                                    mainAxisSpacing: 0),
+                            itemCount: _messages.length,
+                            itemBuilder: (BuildContext ctx, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/message',
+                                      arguments: _messages[index]);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0),
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Image.asset('images/mail.png'),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 80, top: 60),
+                                          child: Text(
+                                            _messages[index].senderUser.name,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 80, top: 60),
+                                            child: Text(
+                                              _messages[index].publicationDate,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: Image.asset('images/keiji.png'),
+                      iconSize: 140,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/');
+                      },
+                    ),
+                    IconButton(
+                      icon: Image.asset('images/mailbox.png'),
+                      iconSize: 140,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -77,6 +136,28 @@ class MessageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('AAAAAAAAAAAAAAA');
+    return Text(message.text);
+  }
+}
+
+class TitleRed extends StatelessWidget {
+  final String title;
+
+  const TitleRed({Key? key, required this.title}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(alignment: Alignment.center, children: [
+      Image.asset(
+        'images/title_red.png',
+        width: 360,
+      ),
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 26),
+        ),
+      )
+    ]);
   }
 }

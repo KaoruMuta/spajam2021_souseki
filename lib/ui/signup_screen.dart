@@ -15,6 +15,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   List<Region> _regions = [];
   String _name = "";
+  int _regionID = 1;
   // Region _region = null;
 
   @override
@@ -42,32 +43,70 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: "名前", // ラベル
-              ),
-              onChanged: (value) {
-                _name = value;
-              },
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage('images/background4.png'),
+          fit: BoxFit.cover,
+        )),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    labelText: "名前", // ラベル
+                    focusColor: Colors.yellow,
+                    // fillColor: Colors.orange,
+                    // filled: true,
+                  ),
+                  // decoration: InputDecoration(fillColor: Colors.orange, filled: true),
+                  onChanged: (value) {
+                    _name = value;
+                  },
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    labelText: "地域ID", // ラベル
+                    focusColor: Colors.yellow,
+                  ),
+                  onChanged: (value) {
+                    _regionID = 1;
+                  },
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                // TODO: Add picker
+                InkWell(
+                  onTap: () async {
+                    Token? token = await ApiClient().register(_name, _regionID);
+                    SharedPreferences pref =
+                        await SharedPreferences.getInstance();
+                    await pref.setString("token", token!.token!);
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: Stack(alignment: Alignment.center, children: [
+                    Image.asset(
+                      'images/start.png',
+                      width: 320,
+                    ),
+                    Text(
+                      '文通をはじめる',
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  ]),
+                ),
+              ],
             ),
-            // TODO: Add picker
-            ElevatedButton(
-              onPressed: () async {
-                // トークン登録
-                Token? token = await ApiClient().register(_name, 1);
-                SharedPreferences pref = await SharedPreferences.getInstance();
-                await pref.setString("token", token!.token!);
-                Navigator.pushNamed(context, '/');
-              },
-              child: const Text(
-                "登録",
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
